@@ -1,0 +1,53 @@
+/* Language Selector */
+.language-dropdown .dropdown-toggle{
+	letter-spacing: 0;
+	color: #6f6d6d;
+	font-family: 'Helvetica';
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 64px;
+	padding: 0px 15px;
+	text-transform: uppercase;
+}
+
+.language-dropdown .dropdown-toggle:hover{
+	color: #66E29A !important;
+	background-color: transparent;
+}
+
+.language-dropdown .dropdown-menu li a {
+	line-height: 48px;
+	background-color: #3A99D8;
+	color: white;
+	height: 48px;
+	padding: 0px 18px;
+}
+
+.language-dropdown .dropdown-menu li a:hover {
+	color: #66E29A !important;
+	background-color: transparent;
+}
+
+@media (max-width: 768px) {
+	.language-dropdown .dropdown-menu li a {
+		border: 0;
+		padding-left: 50px !important;
+	}
+
+	.language-dropdown .dropdown-menu li a:hover {
+		color: #66E29A !important;
+		background-color: transparent;
+		border-bottom: 4px solid #66E29A;
+	}
+}
+
+.nav-on-top{
+	margin-bottom:0;
+}
+.nav-on-top li{
+	list-style: none;
+    display: inline;
+    font-size: 9pt;
+    color: #FFF;
+    font-weight: 400;
+}

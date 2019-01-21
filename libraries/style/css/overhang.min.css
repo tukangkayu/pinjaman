@@ -1,0 +1,38 @@
+/**
+ * overhang.css
+ * Paul Krishnamurthy 2016
+ */
+
+@import url(https://fonts.googleapis.com/css?family=Roboto);.overhang,.overhang-prompt-field{font-family:Helvetica Neue,sans-serif}.overhang{background:#FB4B5E;opacity:0.8;max-height:50px;position:fixed;display:block;width:100%;z-index:9999;padding:10px 2px;top:60;text-align:center}.overhang-message{color:#FFF;font-size:16px}.overhang a{color: #FFF;text-decoration: underline; font-weight: bold; letter-spacing: 0.08em;}.overhang-prompt-field{height:30px;width:100%;border-radius:5px;border:none;display:block;margin-left:auto;margin-right:auto;margin-top:15px;bottom:7px;position:relative;padding-left:3px;padding-right:3px;outline:0;font-size:15px}.overhang-no-option,.overhang-yes-option{min-width:50px;height:30px;border:none;outline:0;border-radius:4px;font-size:20px;color:#FFF;cursor:pointer;margin:0 6px}.overhang-yes-option{margin-left:15px}.overhang-close{vertical-align:middle;cursor:pointer;margin-top:-4px;padding-left:13px;font-size:2.5em;font-weight:700;display:inline-block;line-height:30px}.overhang-close:after{content:"\00d7"}
+
+@media only screen and (max-width: 768px) {
+    .overhang{ 
+                max-height: 100%;
+                max-width: 100%;
+    }
+}
+
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {
+
+	.overhang{ 
+                max-height: 100%;
+                max-width: 100%;
+                top: 180px;
+    }
+}
+
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) {
+
+	.overhang{ 
+                max-height: 100%;
+                max-width: 100%;
+                top: 125px;
+    }
+
+@media (max-width: 768px) {
+    .overhang{ 
+                max-height: 100%;
+                max-width: 100%;
+                top: 185px;
+    }
+}

@@ -1,0 +1,331 @@
+.not-found {
+    padding: 100px 10px;
+    text-align: center;
+}
+
+.not-found p {
+    font-size: 1em;
+    margin: 10px;
+}
+
+.not-found img {
+    width: 100px;
+    height: 100px;
+}
+
+ul.cb-list {
+    text-align: center;
+}
+
+ul.cb-list li {
+    display: inline-block;
+    width: 20%;
+    margin: 10px 30px;
+}
+
+ul.cb-list li img {
+    width: 100px;
+    height: 100px;
+}
+
+ul.nav-tabs {
+    padding-top: 10px;
+    text-align: center;
+    float: none;
+}
+
+.nav-tabs li {
+    float: none;
+    left: auto;
+    position: relative;
+    display: inline-block;
+    margin-bottom: -1px;
+}
+
+.nav-tabs li a {
+    right: auto;
+}
+
+.cb-item {
+    margin-top: 1em;
+}
+
+.cb-item .cb-category-name {
+    margin-top: 1em;
+}
+
+.cb-item .cb-description {
+    font-size: 0.8em;
+    height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cb-patient {
+    overflow: hidden;
+}
+
+.cb-patient p {
+    font-size: 114%;
+}
+
+.patient-story {
+    overflow: hidden;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.patient-story-main {
+    overflow: hidden;
+    padding-top: 20px;
+    padding-bottom: 0px;
+}
+
+.patient-tagline {
+    /* font-family: 'blogger_sansmedium_italic'; */
+    padding-left: 15px;
+    margin-bottom: 10px;
+}
+
+.donator {
+    text-align: center;
+    width: 30%;
+}
+
+.donation-summary div {
+    padding-left: 10px;
+    padding-right: 5px;
+}
+
+#currency-symbol {
+    padding-top: 12px;
+    padding-bottom: 11px;
+    margin-left: 30px;
+    margin-right: -30px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    font-weight: bold;
+    color: #333;
+    background: #FFF;
+}
+
+.btn-smaller {
+    font-size: 12px;
+    text-transform: none;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.funded {
+    border: 2px #3A99D8 solid;
+    background: #3A99D8;
+    color: #F8F8F8;
+    padding: 14px 32px 14px 32px;
+    border-radius: 99px;
+    display: inline-block;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: bold;
+    float: right;
+    right: 30px;
+    position: relative;
+    margin-top: 10px;
+}
+
+.closed {
+    border: 2px #F5F5F5 solid;
+    background: lightgrey;
+    color: darkslategrey;
+    padding: 14px 32px 14px 32px;
+    border-radius: 99px;
+    display: inline-block;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: bold;
+    float: right;
+    right: 30px;
+    position: relative;
+    margin-top: 10px;
+}
+
+.photo-circle {
+    width: 80px;
+    height: 80px;
+    margin: 0 -10px 20px;
+    position: relative;
+    overflow: hidden;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.campaigner-photo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+}
+
+.fundraiser-photo {
+    width: 50px;
+    height: 50px;
+}
+
+.campaigner-photo.img-circle, .fundraiser-photo.img-circle {
+    background-color: #E4E4E4;
+    border: 1px solid #77B7E2;
+    overflow: hidden;
+}
+
+.campaigner-photo > img {
+    display: block;
+    margin: 0 auto;
+    height: 100%;
+    max-height: 100%;
+    max-width: 100%;
+    width:auto;
+}
+
+.campaigner-info {
+    font-family: 'blogger_sansmedium_italic';
+}
+
+.campaigner-info > .campaigner-name {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.campaigner-info > .campaigner-desc {
+    font-size: 1.1em;
+}
+
+#form-fundraiser .control-label {
+    margin-left: 10px;
+}
+
+/* Page patient donate */
+
+.patient-donate-title{
+    align-items: center;
+    display: flex;
+    min-height: 100px;
+}
+
+.box-shadow-black{
+  box-shadow: 0 4px 20px 0 rgba(67, 153, 214, 0.2), 0 6px 20px 0 rgba(67, 153, 214, 0.19);
+}
+
+.box-shadow-red{
+  box-shadow: 0 4px 20px 0 rgba(250, 68, 93, 0.2), 0 6px 20px 0 rgba(250, 68, 93, 0);
+}
+
+.brad-all{
+  border-radius: 20px !important;
+}
+
+.brad-right-topbot{
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.brad-left-topbot{
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #32cd32;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.patient-donate-area h4{
+  color: #16517F;
+}
+
+.patient-donate-area p{
+  font-size: 12px;
+}
+
+.patient-donate-area .input-group-addon{
+  color: gray;
+}
+
+#wecare_panel{
+  display: none;
+}
+
+.show-hide{
+  display: block !important;
+}
+
+.donatur_list .col-xs-3{
+    padding:10;
+}
+
+.medikator-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 250px;
+    display: inline-block;
+    vertical-align: bottom;
+    color: #16517F;
+  }
+
+.list-disbursement{
+  font-size:10pt;
+}
