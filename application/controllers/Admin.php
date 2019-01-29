@@ -317,7 +317,7 @@ class Admin extends CI_Controller {
             $data['id_member'] = $member->id_member;
             $data['id']=$id;
             $this->mpinjaman->verifikasiPinjaman($data);
-            redirect('/admin/verifikasimember');
+            redirect('/admin/pinjaman');
         }
         $data['pinjaman'] = $pinjaman;
         $data['detail'] = $detail;

@@ -97,7 +97,7 @@ Class Mpinjaman extends CI_Model{
 			$target_file_usaha = $target_dir_usaha.basename($_FILES["fileusaha"]["name"]);
 			$fileTipe_usaha = pathinfo($target_file_usaha,PATHINFO_EXTENSION);
 			$nama_file_usaha=$_SESSION['nama_member']."_usaha_".Date("dmYis").".".$fileTipe_usaha;
-			$nama_simpan_usaha= $target_dir_jaminan.$nama_file_jaminan;
+			$nama_simpan_usaha= $target_dir_usaha.$nama_file_usaha;
 			move_uploaded_file($_FILES["fileusaha"]["tmp_name"], $nama_simpan_usaha);
 		}
 		if($_FILES['dokumenperjanjian']['error'] != 4){
@@ -128,7 +128,7 @@ Class Mpinjaman extends CI_Model{
 				$target_file_usaha = $target_dir_usaha.basename($_FILES["fotousaha"]["name"]);
 				$fileTipe_usaha = pathinfo($target_file_usaha,PATHINFO_EXTENSION);
 				$nama_file_usaha=$_SESSION['nama_member']."_fotousaha_".Date("dmYis").".".$fileTipe_usaha;
-				$nama_simpan_usaha= $target_dir_jaminan.$nama_file_jaminan;
+				$nama_simpan_usaha= $target_dir_usaha.$nama_file_usaha;
 				move_uploaded_file($_FILES["fotousaha"]["tmp_name"], $nama_simpan_usaha);
 			}
 			$usaha = array(
@@ -148,7 +148,7 @@ Class Mpinjaman extends CI_Model{
 				'modalusaha'=>$data['modalusaha'],
 				'utangusaha'=>$data['utangusaha'],
 			);
-			$this->db->insert('detailusaha',$usaha);
+			// $this->db->insert('detailusaha',$usaha);
 		}
 	}
 	public function verifikasiPinjaman($data){

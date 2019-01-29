@@ -275,7 +275,7 @@
             </div>
             <div class="form-group">
               <label>File Jaminan</label><br>
-              <a href="<?= base_url() ?>pinjaman/<?= $detail->filejaminan ?>" class="btn btn-primary" download="">Download</a>
+              <a href="<?= base_url() ?>uploads/pinjaman/<?= $detail->filejaminan ?>" class="btn btn-primary" download="">Download</a>
             </div>
           </div>
           <div id="step6" class="tab-pane fade">
@@ -287,21 +287,21 @@
 
                 <div class="col-md-4">
                   <label>Rekening Koran 3 bulan terakhir</label><br>
-                  <a href="<?= base_url() ?>pinjaman/<?= $detail->filerekkoran3 ?>" class="btn btn-primary" download="">Download</a>
+                  <a href="<?= base_url() ?>uploads/pinjaman/<?= $detail->filerekkoran3 ?>" class="btn btn-primary" download="">Download</a>
                 </div>
                 <div class="col-md-4" <?= $style ?>>
                   <label>Laporan Keuangan Tahunan</label><br>
-                  <a href="<?= base_url() ?>pinjaman/<?= $detail->filelaporankeuangantahun ?>" class="btn btn-primary" download="">Download</a>
+                  <a href="<?= base_url() ?>uploads/pinjaman/<?= $detail->filelaporankeuangantahun ?>" class="btn btn-primary" download="">Download</a>
                 </div>
                 <div class="col-md-4" <?= $style ?>>
                   <label>SKU/SKDU/IUMK/SIUP</label><br>
-                  <a href="<?= base_url() ?>pinjaman/<?= $detail->fileusaha ?>" class="btn btn-primary" download="">Download</a>
+                  <a href="<?= base_url() ?>uploads/pinjaman/<?= $detail->fileusaha ?>" class="btn btn-primary" download="">Download</a>
                 </div>
               </div>
             </div>
             <div class="form-group">
               <label>Dokumen Perjanjian Pinjaman</label><br>
-              <a href="<?= base_url() ?>pinjaman/<?= $detail->filedokumenperjanjian ?>" class="btn btn-primary" download="">Download</a>
+              <a href="<?= base_url() ?>uploads/pinjaman/<?= $detail->filedokumenperjanjian ?>" class="btn btn-primary" download="">Download</a>
             </div>
           </div>
         </div>

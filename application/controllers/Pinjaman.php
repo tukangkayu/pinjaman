@@ -54,9 +54,9 @@ class Pinjaman extends CI_Controller {
 			$data['id']=$id;
 			$data['kategori_pinjaman'] =$pinjaman->kategori_pinjaman;
 			$this->mpinjaman->infoPinjaman($data);
-			$msg='Detail berhasil dikirim.Akan ada notifikasi jika diterima oleh admin';
-			setcookie('pesan_listpinjaman',$msg,time()+60,'/');
-			redirect('/pinjaman/listpinjaman');
+			// $msg='Detail berhasil dikirim.Akan ada notifikasi jika diterima oleh admin';
+			// setcookie('pesan_listpinjaman',$msg,time()+60,'/');
+			// redirect('/pinjaman/listpinjaman');
 		}
 		$this->load->view('partials/headerhome');
 		$this->load->view('partials/navbar');
