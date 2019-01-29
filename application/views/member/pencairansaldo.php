@@ -35,11 +35,12 @@
             $no=0;
             foreach($pencairan as $t){
               $no++;
+              $status=["Pending","Berhasil","Ditolak"];
             ?>
             <tr>
             <td><?= $no ?></td>
             <td><?=  $t->jumlah ?></td>
-            <td><?= $t->status==0?"Pending":"Berhasil" ?></td>
+            <td><?= $status[$t->status] ?></td>
             <td><?= $t->created_at ?></td>
             </tr>
             <?php
