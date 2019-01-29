@@ -28,6 +28,7 @@
           foreach($pinjaman1 as $p){
             $detail = $this->mpinjaman->detailPinjaman(['id_pinjaman'=>$p->id]);
             $no++;
+
           ?>
           <tr>
           <td><?= $no ?></td>
@@ -38,6 +39,7 @@
           <td><?= $p->lama_pinjaman ?> Bulan</td>
           <td><?= $p->bunga_efektif ?>%</td>
           <td><?= $p->created_at ?></td>
+ 
           <td>
             <?php
               if(count($detail)==0){
@@ -89,6 +91,59 @@
           <td><?= $p->lama_pinjaman ?> Bulan</td>
           <td><?= $p->bunga_efektif ?>%</td>
           <td><?= $p->created_at ?></td>
+          <td>
+            <?php
+              if(count($detail)==0){
+              ?>
+              <a href="<?= base_url() ?>pinjaman/infopinjaman/<?= $p->id ?>" class="btn btn-primary">Isi Detail</a>
+              <?php
+              }else{
+              ?>
+              <a href="<?= base_url() ?>pinjaman/detailpinjaman/<?= $p->id ?>" class="btn btn-primary">Detail</a>
+              <a href="<?= base_url() ?>pinjaman/detailpemindahan/<?= $p->id ?>" class="btn btn-primary">Pemindahan Dana</a>
+              <?php
+              }
+            ?>
+          </td>
+          </tr>
+          <?php
+          }
+          ?>
+          </tbody>
+        </table>
+        <hr>
+        <h2>List Pinjaman Selesai</h2>
+        <table id="data-table" class="table table-bordered data-table">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Judul Pinjaman</th>
+              <th>Jumlah</th>
+              <th>Tenor</th>
+              <th>Bunga</th>
+              <th>Tgl Diajukan</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+          <?php
+          $no=0;
+          foreach($pinjaman2 as $p){
+            $detail = $this->mpinjaman->detailPinjaman(['id_pinjaman'=>$p->id]);
+            $no++;
+            $status =  date("d-m-Y",strtotime($p->start_at))=="30-11--0001"?"Tidak Terkumpul":"Terkumpul";
+          ?>
+          <tr>
+          <td><?= $no ?></td>
+          <td><?=  $p->nama_pinjaman ?></td>
+          <td>
+            <?= $p->jumlah_pinjaman ?>
+          </td>
+          <td><?= $p->lama_pinjaman ?> Bulan</td>
+          <td><?= $p->bunga_efektif ?>%</td>
+          <td><?= $p->created_at ?></td>
+           <td><?= $status ?></td>
           <td>
             <?php
               if(count($detail)==0){

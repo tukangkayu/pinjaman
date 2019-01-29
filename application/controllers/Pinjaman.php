@@ -72,8 +72,8 @@ class Pinjaman extends CI_Controller {
         $this->load->view('partials/footerhome');
 	}
 	public function listpinjaman(){
-		$pinjaman1 = $this->mpinjaman->ambilPinjaman(['id_member'=>$_SESSION['id_member'],'status_pengajuan'=>1]);
-		$pinjaman2 = $this->mpinjaman->ambilPinjaman(['id_member'=>$_SESSION['id_member'],'status_pinjaman'=>2]);
+		$pinjaman1 = $this->mpinjaman->ambilPinjaman(['id_member'=>$_SESSION['id_member'],'status_pengajuan'=>1,'status_pinjaman'=>0]);
+		$pinjaman2 = $this->mpinjaman->ambilPinjaman(['id_member'=>$_SESSION['id_member'],'status_pinjaman'=>1]);
 		$pinjaman3 = $this->mpinjaman->ambilPinjaman(['id_member'=>$_SESSION['id_member'],'status_pengajuan'=>0]);
 		$data['pinjaman1']=$pinjaman1;
 		$data['pinjaman2']=$pinjaman2;

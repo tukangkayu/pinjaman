@@ -13,7 +13,6 @@ class Admin extends CI_Controller {
         $this->setstartpinjaman();
         $this->kirimtagihanpinjaman();
         $this->kirimdenda();
-
 	}
 	public function index(){
         $data=[];
