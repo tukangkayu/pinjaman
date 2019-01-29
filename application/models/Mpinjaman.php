@@ -148,7 +148,7 @@ Class Mpinjaman extends CI_Model{
 				'modalusaha'=>$data['modalusaha'],
 				'utangusaha'=>$data['utangusaha'],
 			);
-			// $this->db->insert('detailusaha',$usaha);
+			$this->db->insert('detailusaha',$usaha);
 		}
 	}
 	public function verifikasiPinjaman($data){
@@ -178,7 +178,6 @@ Class Mpinjaman extends CI_Model{
 				'notification'=>'Pengajuan Pinjaman anda telah diapprove oleh admin'
 			);
 			$this->db->insert('notification',$datanotif);
-			
 		}
 		$sql="update pinjaman set status_pengajuan=".$data['status'].",updated_at = CURRENT_TIMESTAMP where id = ".$data['id'];
 		return $this->db->query($sql);
