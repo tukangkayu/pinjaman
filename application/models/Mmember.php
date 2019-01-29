@@ -10,15 +10,17 @@ Class Mmember extends CI_Model{
 	public function updateProfile($data){
 		//foto ktp
 		$target_dir_ktp = "uploads/ktp/";
-		$ktplama=$data['ktplama'];
+		$nama_file_ktp=$data['ktplama'];
 		if(file_exists("uploads/ktp/".$ktplama)){
 			unlink("uploads/ktp/".$ktplama);
 		}
-		$target_file_ktp = $target_dir_ktp.basename($_FILES["fotoktp"]["name"]);
-		$fileTipe_ktp = pathinfo($target_file_ktp,PATHINFO_EXTENSION);
-		$nama_file_ktp=$data['nama']."_ktp_".Date("dmYis").".".$fileTipe_ktp;
-		$nama_simpan_ktp= $target_dir_ktp.$nama_file_ktp;
-		move_uploaded_file($_FILES["fotoktp"]["tmp_name"], $nama_simpan_ktp);
+		if($_FILES['fotoktp']['error'] != 4){
+			$target_file_ktp = $target_dir_ktp.basename($_FILES["fotoktp"]["name"]);
+			$fileTipe_ktp = pathinfo($target_file_ktp,PATHINFO_EXTENSION);
+			$nama_file_ktp=$data['nama']."_ktp_".Date("dmYis").".".$fileTipe_ktp;
+			$nama_simpan_ktp= $target_dir_ktp.$nama_file_ktp;
+			move_uploaded_file($_FILES["fotoktp"]["tmp_name"], $nama_simpan_ktp);
+		}
 		//foto profile
 
 		$nama_file_profile = $data['profilelama'];

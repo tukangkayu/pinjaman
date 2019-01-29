@@ -52,7 +52,7 @@
                 $day = $day / (60 * 60 * 24);
                 $day= (int)$day;
                   // $enddays = strtotime('+'.(30-$day).' days', strtotime($p->updated_at));
-                $enddays = strtotime('+1 month', strtotime($h->updated_at));
+                $enddays = strtotime('+30 days', strtotime($h->updated_at));
                 $enddays = strtotime('-'.($day).' days', $enddays);
                 $end = $enddays - strtotime($h->updated_at);
                 $text = $end<=0?"Berakhir":($end / (60 * 60 * 24))." hari lagi";
@@ -117,7 +117,8 @@
             foreach($pinjamanselesai as $h){
               $member=$this->mmember->ambilSemuaMember(['id_member'=>$h->id_member])[0];
               $i++;
-              $status =  date("d-m-Y",strtotime($h->start_at))=="30-11--0001"?"Tidak Terkumpul":"Terkumpul";
+              $tgl=date("d-m-Y",strtotime($h->start_at));
+              $status =  $tgl=="30-11--0001" || $tgl=="01-01-1970"?"Tidak Terkumpul":"Terkumpul";
               ?>
               <tr>
                 <td><?= $i ?></td>

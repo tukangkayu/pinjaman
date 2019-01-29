@@ -132,7 +132,8 @@
           foreach($pinjaman2 as $p){
             $detail = $this->mpinjaman->detailPinjaman(['id_pinjaman'=>$p->id]);
             $no++;
-            $status =  date("d-m-Y",strtotime($p->start_at))=="30-11--0001"?"Tidak Terkumpul":"Terkumpul";
+            $tgl=date("d-m-Y",strtotime($p->start_at));
+            $status =  $tgl=="30-11--0001" || $tgl=="01-01-1970"?"Tidak Terkumpul":"Terkumpul";
           ?>
           <tr>
           <td><?= $no ?></td>

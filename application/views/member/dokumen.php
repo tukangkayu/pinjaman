@@ -22,7 +22,7 @@
             <td><?=  $d->jenis ?></td>
             <td><?= $d->created_at ?></td>
             <td>
-                <a href="<?= base_url() ?>uploads/dokumen/<?= $d->nama ?>" class="btn btn-primary" download>Download</a>
+                <a href="<?= base_url() ?>dokumen/<?= $d->nama ?>" class="btn btn-primary" download>Download</a>
             </td>
             </tr>
             <?php

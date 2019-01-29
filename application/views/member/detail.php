@@ -1,7 +1,11 @@
 <?php
+$day=strtotime(Date("Y-m-d"))-(strtotime($pinjaman->updated_at));
+$day = $day / (60 * 60 * 24);
+$day= (int)$day;
 $enddays = strtotime('+30 days', strtotime($pinjaman->updated_at));
+$enddays = strtotime('-'.($day).' days', $enddays);
 $end = $enddays - strtotime($pinjaman->updated_at);
-$text = $enddays<=0?"Berakhir":($end / (60 * 60 * 24))." hari lagi";
+$text = $end<=0?"Berakhir":($end / (60 * 60 * 24))." hari lagi";
 $kategori = ["Personal","UKM Kecil","Perusahaan Besar"];
 $cara = ["Per Bulan","Akhir Pinjaman"];
 $lender = $this->mdana->ambilPemindahan(['id_pinjaman'=>$pinjaman->id,'status'=>1]);
@@ -11,6 +15,7 @@ foreach($lender as $t){
 }
 $percent = ($pinjaman->jumlah_pinjaman-$total)/$pinjaman->jumlah_pinjaman*100;
 $percent = 100-$percent;
+$text = $percent==100?"Berakhir":$text;
 ?>
 <div class="container">
 	<div class="row">
