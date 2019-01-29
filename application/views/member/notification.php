@@ -19,7 +19,7 @@
             $dokumen = $this->mdokumen->getDokumen(array('id'=>$n->id_dokumen));
             $html="";
             if($n->id_dokumen!=0){
-              $html = "<a href='".base_url()."dokumen/".$dokumen[0]->nama."' download class='btn btn-primary'>Download</a>";
+              $html = "<a href='".base_url()."uploads/dokumen/".$dokumen[0]->nama."' download class='btn btn-primary'>Download</a>";
             }
           ?>
           <tr>
