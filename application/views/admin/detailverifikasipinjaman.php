@@ -43,7 +43,7 @@
           <li class="active"><a data-toggle="tab" href="#profile">Info Profile</a></li>
           <li ><a data-toggle="tab" href="#step1">Info pengajuan</a></li>
           <li class="<?= $disable ?>"><a  <?= $tab ?> href="#step2">Identitas usaha</a></li>
-<!--           <li><a data-toggle="tab" href="#step3">Tujuan Pengalangan</a></li> -->
+          <li><a data-toggle="tab" href="#step3">Tujuan Pengalangan</a></li>
           <li><a data-toggle="tab" href="#step4">Data Keuangan</a></li>
           <li><a data-toggle="tab" href="#step5">Jaminan</a></li>
           <li><a data-toggle="tab" href="#step6">Dokumen Pendukung</a></li>
@@ -244,12 +244,12 @@
               <textarea name="alasanusaha" class="form-control"></textarea>
             </div>
           </div>
-          <!-- <div id="step3" class="tab-pane fade">
+          <div id="step3" class="tab-pane fade">
              <div class="form-group">
           <label for="">Deskripsi tujuan pengalanggan dana ini dilakukan</label>
           <textarea name="tujuandana"  class="form-control" readonly=""><?= $detail->tujuanpinjaman ?></textarea>
             </div>
-          </div> -->
+          </div>
           <div id="step4" class="tab-pane fade">
              <div class="form-group">
           <label for="">Jumlah dan pendapatan laba bersih 1 tahun terakhir atau gaji perbulan bagi peminjam personal</label>
