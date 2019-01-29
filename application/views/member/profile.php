@@ -37,7 +37,7 @@
               <div class="form-group">
                 <label>Foto KTP*</label>
                 <input type="hidden" name="ktplama" value="<?= $member->fotoktp ?>">
-                <input type="file" name="fotoktp" class="form-control" required="">
+                <input type="file" name="fotoktp" class="form-control" <?= @$member->fotoktp==''?'required=""':'' ?>>
               </div>
             </div>
           </div>
