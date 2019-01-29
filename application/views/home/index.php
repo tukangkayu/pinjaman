@@ -63,10 +63,14 @@
                 $day = $day / (60 * 60 * 24);
                 $day= (int)$day;
                 // $enddays = strtotime('+'.(30-$day).' days', strtotime($p->updated_at));
-                $enddays = strtotime('+1 month', strtotime($p->updated_at));
-                $enddays = strtotime('-'.($day).' days', $enddays);
-                $end = $enddays - strtotime($p->updated_at);
-                $text = $end<=0?"Berakhir":($end / (60 * 60 * 24))." hari lagi";
+
+                // $enddays = strtotime('+1 month', strtotime($p->updated_at));
+                // $enddays = strtotime('-'.($day).' days', $enddays);
+                // $end = $enddays - strtotime($p->updated_at);
+                // $text = $end<=0?"Berakhir":($end / (60 * 60 * 24))." hari lagi";
+                $enddays = strtotime('+30 days', strtotime($pinjaman->updated_at));
+                $end = $enddays - strtotime($pinjaman->updated_at);
+                $text = $enddays<=0?"Berakhir":($end / (60 * 60 * 24))." hari lagi";
                 $detail = $this->mpinjaman->detailPinjaman(['id_pinjaman'=>$p->id])[0];
                 @$detailusaha = $this->mpinjaman->detailUsaha(['id_pinjaman'=>$p->id])[0];
                 $kategori = ["Personal","UKM Kecil","Perusahaan Besar"];
