@@ -31,9 +31,9 @@
               <td><?= $no ?></td>
               <td><?= $d->angsuranke ?></td>
               <td><?= $d->totaltagihan ?></td>
-              <td><?= $d->tgltagihan ?></td>
               <td><?= $d->denda ?></td>
               <td><?= $d->totaltagihan + $d->denda ?></td>
+              <td><?= $d->tgltagihan ?></td>
               <td><?= $status[$d->status] ?></td>
               <td>
                 <?php
