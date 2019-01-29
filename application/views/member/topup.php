@@ -7,7 +7,7 @@
           <div class="col-md-8">
               <div class="form-group">
                 <label>Jumlah</label>
-                <input type="text" class="form-control" name="jumlah" placeholder="Masukkan jumlah ingin ditopup">
+                <input type="number" required="" min="100000" class="form-control" name="jumlah" placeholder="Masukkan jumlah ingin ditopup">
               </div>
           </div>
           <div class="col-md-4">
@@ -36,24 +36,27 @@
             $no=0;
             foreach($topup as $t){
               $no++;
+              $status=["Pending","Berhasil","Ditolak"];
             ?>
-            <td><?= $no ?></td>
-            <td><?=  $t->saldo ?></td>
-            <td><?= $t->status==0?"Pending":"Berhasil" ?></td>
-            <td><?= $t->created_at ?></td>
-            <td>
-              <?php
-              if($t->fotobukti==''){
-              ?>
-                <a href="<?= base_url() ?>member/uploadbukti/<?= $t->id_saldo ?>" class="btn btn-primary">Konfirmasi</a>              
-              <?php
-              }else{
-              ?>
-              <a class="btn btn-primary" data-src="<?= base_url() ?>uploads/bukti/<?= $t->fotobukti ?>" data-toggle="modal" data-target="#modal-bukti">Lihat Bukti</a>
-              <?php
-              }
-              ?>
-            </td>
+            <tr>
+              <td><?= $no ?></td>
+              <td><?=  $t->saldo ?></td>
+              <td><?= $status[$t->status] ?></td>
+              <td><?= $t->created_at ?></td>
+              <td>
+                <?php
+                if($t->fotobukti==''){
+                ?>
+                  <a href="<?= base_url() ?>member/uploadbukti/<?= $t->id_saldo ?>" class="btn btn-primary">Konfirmasi</a>              
+                <?php
+                }else{
+                ?>
+                <a class="btn btn-primary" data-src="<?= base_url() ?>uploads/bukti/<?= $t->fotobukti ?>" data-toggle="modal" data-target="#modal-bukti">Lihat Bukti</a>
+                <?php
+                }
+                ?>
+              </td>
+            </tr>
             <?php
             }
             ?>

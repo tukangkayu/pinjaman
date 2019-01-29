@@ -26,7 +26,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Saldo Pinjaman bisa dicairkan</label>
-            <input type="text" class="auto-numeric" value="<?= $totalcair ?>" readonly="">
+            <input type="text" class="auto-numeric" value="<?= $totalcair*0.99 ?>" readonly="">
           </div>
         </div>
       </div>

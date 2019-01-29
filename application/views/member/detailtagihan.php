@@ -7,9 +7,10 @@
             <tr>
               <th>No</th>
               <th>Angsuran ke</th>
-              <th>Total Tagihan</th>
-              <th>Tgl Tagihan</th>
+              <th>Tagihan</th>
               <th>Denda</th>
+              <th>Total Tagihan</th>
+              <th>Tgl Tagihan Berakhir</th>
               <th>Status</th>
               <th>Aksi</th>
             </tr>
@@ -19,6 +20,12 @@
             $no=0;
             foreach($tagih as $d){
               $no++;
+              $tgl = strtotime($d->tgltagihan);
+              $now = strtotime(Date("Y-m-d"));
+              $jarak = $tgl-$now;
+              $jarak = $jarak/ (60 * 60 * 24);
+              $status=["Belum Dibayar","Dibayar","Ditolak"];
+              if($jarak<=5){
             ?>
             <tr>
               <td><?= $no ?></td>
@@ -26,12 +33,25 @@
               <td><?= $d->totaltagihan ?></td>
               <td><?= $d->tgltagihan ?></td>
               <td><?= $d->denda ?></td>
-              <td><?= $d->status==0?"Belum Dibayar":"Dibayar" ?></td>
+              <td><?= $d->totaltagihan + $d->denda ?></td>
+              <td><?= $status[$d->status] ?></td>
               <td>
-                <a href="<?= base_url() ?>pinjaman/detailtagihan/<?= $d->id ?>" class="btn btn-primary"><?= $d->status==0?"Bayar":"Detail" ?></a>
+                <?php
+                if($d->fotobukti==''){
+                ?>
+                  <a href="<?= base_url() ?>pinjaman/bayartagihan/<?= $d->id ?>" class="btn btn-primary">Bayar</a>        
+                <?php
+                }else{
+                ?>
+                <a class="btn btn-primary" data-src="<?= base_url() ?>uploads/tagihan/<?= $d->fotobukti ?>" data-toggle="modal" data-target="#modal-bukti">Lihat Bukti</a>
+                <?php
+                }
+                ?>
+      
               </td>
             </tr>
             <?php
+              }
             }
             ?>
           </tbody>

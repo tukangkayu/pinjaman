@@ -17,13 +17,16 @@
             $no=0;
             foreach($dana as $d){
               $no++;
+              $status = ["Pending","Berhasil","Ditolak"];
               $pinjaman = $this->mpinjaman->ambilPinjaman(['id'=>$d->id_pinjaman])[0];
             ?>
+            <tr>
             <td><?= $no ?></td>
             <td><?=  $pinjaman->nama_pinjaman ?></td>
             <td><?= $d->jumlah ?></td>
-            <td><?= $d->status==0?"Pending":"Berhasil" ?></td>
+            <td><?= $status[$d->status] ?></td>
             <td><?= $d->created_at ?></td>
+            </tr>
             <?php
             }
             ?>

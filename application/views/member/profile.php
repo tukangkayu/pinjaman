@@ -29,7 +29,8 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Tgl Lahir</label>
-                <input type="date" name="tgllahir" class="form-control" value="<?= $member->tgllahir ?>" required="">
+                <input type="date" name="tgllahir"  class="form-control" value="<?= $member->tgllahir ?>" required="" >
+                <p class="text-danger"><?= @$msgtgllahir ?></p>
               </div>
             </div>
             <div class="col-md-6">

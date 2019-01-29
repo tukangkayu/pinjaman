@@ -56,6 +56,10 @@
         <!-- /.box-body -->
       </div>
       <!-- box -->
+      <?php
+         $status =  date("d-m-Y",strtotime($pinjam->start_at))=="30-11--0001"?"tidak":"ya";
+         if($status=="ya"){
+      ?>
       <div class="box box-default color-palette-box">
         <div class="box-header with-border">
           <h3 class="box-title"><i class="fa fa-tag"></i>History Pembayaran tagihan</h3>
@@ -67,9 +71,11 @@
                 <th>No</th>
                 <th>Judul Pinjaman</th>
                 <th>Angsuran ke</th>
-                <th>Total</th>
-                <th>Tgl Tagihan</th>
+                <th>Tagihan</th>
                 <th>Denda</th>
+                <th>Total Tagihan</th>
+                <th>Tgl Tagihan</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -79,14 +85,17 @@
                 $member = $this->mmember->ambilSemuaMember(array('id_member'=>$h->id_member))[0];
                 $pinjam = $this->mpinjaman->ambilPinjaman(['id'=>$h->id_pinjaman])[0];
                 $i++;
+                $status=["Belum Dibayar","Dibayar"];
               ?>
               <tr>
               <td><?= $i ?></td>
               <td><?= $pinjam->nama_pinjaman ?></td>
               <td><?= $h->angsuranke ?></td>
               <td><?= $h->totaltagihan?></td>
-              <td><?= $h->tgltagihan?></td>
               <td><?= $h->denda ?></td>
+              <td><?= $h->totaltagihan + $h->denda ?></td>
+              <td><?= $h->tgltagihan?></td>
+              <td><?= $status[$h->status] ?></td>
               </tr>
               <?php
               }
@@ -96,6 +105,7 @@
         </div>
         <!-- /.box-body -->
       </div>
+      <?php } ?>
 
     </section>
     <!-- /.content -->

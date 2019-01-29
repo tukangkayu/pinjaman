@@ -7,7 +7,7 @@
           <div class="col-md-8">
               <div class="form-group">
                 <label>Jumlah</label>
-                <input type="number" name="jumlah" class="form-control" max="<?= $member->saldo ?>" placeholder="Masukkan jumlah" required="">
+                <input type="number" name="jumlah" class="form-control" max="<?= $member->saldo ?>" placeholder="Masukkan jumlah" required="" >
               </div>
           </div>
           <div class="col-md-4">

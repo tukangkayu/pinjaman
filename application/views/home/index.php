@@ -59,13 +59,18 @@
             <div class="row">
             <?php
             foreach($pinjaman as $p){
-                $enddays = strtotime('+30 days', strtotime($p->updated_at));
+                $day=strtotime(Date("Y-m-d"))-(strtotime($p->updated_at));
+                $day = $day / (60 * 60 * 24);
+                $day= (int)$day;
+                // $enddays = strtotime('+'.(30-$day).' days', strtotime($p->updated_at));
+                $enddays = strtotime('+1 month', strtotime($p->updated_at));
+                $enddays = strtotime('-'.($day).' days', $enddays);
                 $end = $enddays - strtotime($p->updated_at);
-                $text = $enddays<=0?"Berakhir":($end / (60 * 60 * 24))." hari lagi";
-                $kategori = ["Personal","UKM Kecil","Perusahaan Besar"];
-                $cara = ["Per Bulan","Akhir Pinjaman"];
+                $text = $end<=0?"Berakhir":($end / (60 * 60 * 24))." hari lagi";
                 $detail = $this->mpinjaman->detailPinjaman(['id_pinjaman'=>$p->id])[0];
                 @$detailusaha = $this->mpinjaman->detailUsaha(['id_pinjaman'=>$p->id])[0];
+                $kategori = ["Personal","UKM Kecil","Perusahaan Besar"];
+                $cara = ["Per Bulan","Akhir Pinjaman"];
                 $lender = $this->mdana->ambilPemindahan(['id_pinjaman'=>$p->id,'status'=>1]);
                 $total = 0;
                 foreach($lender as $t){
@@ -73,12 +78,13 @@
                 }
                 $percent = ($p->jumlah_pinjaman-$total)/$p->jumlah_pinjaman*100;
                 $percent = 100-$percent;
+                $text = $percent==100?"Berakhir":$text;
             ?><a href="<?= base_url() ?>pinjaman/detail/<?= $p->id ?>">
                 <div class="patient-card col-md-4 col-sm-6">
                         <div class="panel col-md-12">
                             <div style="position:relative;">
                                 <div class="row patient-img" style="background: url('<?= base_url() ?>uploads/pinjaman/<?= @$detailusaha->fotousaha ?>')"></div>
-                                <span class="label label-<?= $p->status_pinjaman==0?'success':'primary' ?>"><?= $text ?></span>
+                                <span class="label label-<?= $p->status_pinjaman!=2?'success':'primary' ?>"><?= $text ?></span>
                                 <span class="label label-primary"><?= $kategori[$p->kategori_pinjaman] ?></span>
                             </div>
                             <div class="patient-summary">

@@ -9,14 +9,21 @@ class Member extends CI_Controller {
 	}
     public function profile(){
         $active =  $this->router->fetch_method();
-        $data['active'] = $active;
         $member  = $this->Mmember->ambilSemuaMember(array('id_member'=>$_SESSION['id_member']))[0];
-        $data['member'] =$member;
         if($this->input->server('REQUEST_METHOD') == 'POST'){
             $data = $this->input->post();
-            $this->Mmember->updateProfile($data);
-            redirect('/member/profile');
+            $now  = time();
+            $age = strtotime('-18 years', $now);
+            $minage=date("Y-m-d",$age);
+            if(strtotime($data['tgllahir'])<strtotime($age)){
+                $data['msgtgllahir'] = 'Usia harus 17 tahun atau lebih untuk bisa meminjam';
+            }else{
+                $this->Mmember->updateProfile($data);
+                redirect('/member/profile');
+            }
         }
+        $data['active'] = $active;
+        $data['member'] =$member;
         $this->load->view('partials/headerhome');
         $this->load->view('partials/navbar');
         $this->load->view('member/profile',$data);
@@ -102,15 +109,15 @@ class Member extends CI_Controller {
         $totalTopup = $this->msaldo->totalTopup($_SESSION['id_member']);
         $data['totalTopup'] =$totalTopup->saldo==''?0:$totalTopup->saldo;
         $pinjam = $this->mpinjaman->ambilPinjaman(['status_pengajuan'=>1,'status_pinjaman'=>0]);
-        $pinjamcair = $this->mpinjaman->ambilPinjaman(['id_member'=>$_SESSION['id_member'],'status_pengajuan'=>1,'status_pinjaman'=>0]);
         $totalinvestasi = 0;
-        $totalcair=0;
         foreach($pinjam as $p){
-            $totaldana = $this->db->query("select sum(jumlah) as total from pemindahandana where id_member=".$_SESSION['id_member']." and id_pinjaman=".$p->id)->result()[0]->total;
+            $totaldana = $this->db->query("select sum(jumlah) as total from pemindahandana where id_member=".$_SESSION['id_member']." and status=1 and id_pinjaman=".$p->id)->result()[0]->total;
             $totalinvestasi+=$totaldana;
         }
+        $totalcair=0;
+        $pinjamcair = $this->mpinjaman->ambilPinjaman(['id_member'=>$_SESSION['id_member'],'status_pengajuan'=>1,'status_pinjaman'=>0]);
         foreach($pinjamcair as $p){
-            $totaldana = $this->db->query("select sum(jumlah) as total from pemindahandana where id_pinjaman=".$p->id)->result()[0]->total;
+            $totaldana = $this->db->query("select sum(jumlah) as total from pemindahandana where status=1 and id_pinjaman=".$p->id)->result()[0]->total;
             $totalcair+=$totaldana;
         }
         $totalpencairan=0;
@@ -154,6 +161,9 @@ class Member extends CI_Controller {
         $this->load->view('member/uploadbukti',$data);
         $this->load->view('partials/footerhome');
     }
+
+
+
     public function detailtopup(){
         $data=[];
         $this->load->view('partials/headerhome');
@@ -184,7 +194,33 @@ class Member extends CI_Controller {
         $data['member']=$member;
         $pencairan = $this->msaldo->ambilPencairan(['id_member'=>$_SESSION['id_member'],'jenis'=>1]);
         $data['pencairan']=$pencairan;
+        $totalcair=0;
+        $pinjamcair = $this->mpinjaman->ambilPinjaman(['id_member'=>$_SESSION['id_member'],'status_pengajuan'=>1,'status_pinjaman'=>0]);
+        $totalpinjaman = 0;
+        foreach($pinjamcair as $p){
+            $totaldana = $this->db->query("select sum(jumlah) as total from pemindahandana where id_pinjaman=".$p->id)->result()[0]->total;
+            $totalcair+=$totaldana;
+            $totalpinjaman = $p->jumlah_pinjaman;
+        }
+        $totalpencairan=0;
+        $cair = $this->msaldo->ambilPencairan(['id_member'=>$_SESSION['id_member'],'jenis'=>1,'status'=>1]);
+        foreach($cair as $c){
+            $totalpencairan += $c->jumlah;
+        }
+        $data['maxcair'] = $totalcair-$totalpencairan;
         if($this->input->server('REQUEST_METHOD') == 'POST'){
+            // $data['totalcair'] = $totalcair;
+            if($totalcair<$totalpinjaman){
+                $msg='Pencairan pinjaman bisa dilakukan setelah semua dana telah terkumpul.Atau saat masa berakhir pinjaman mencapai  80% dari jumlah pinjaman';
+                setcookie('pesan_pencairanpinjaman',$msg,time()+60,'/');
+                redirect('/member/pencairanpinjaman');
+            }
+            $check = $this->msaldo->ambilPencairan(['id_member'=>$_SESSION['id_member'],'jenis'=>1,'status'=>0]);
+            if(count($check)>0){
+                $msg='Pencairan sebelumnya masih pending.Harus menunggu pencairan diverifikasi.';
+                setcookie('pesan_pencairanpinjaman',$msg,time()+60,'/');
+                redirect('/member/pencairanpinjaman');
+            }
             $data = $this->input->post();
             $data['jenis']=1;
             $data['id_member'] = $member->id_member;

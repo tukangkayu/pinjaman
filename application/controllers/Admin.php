@@ -9,8 +9,10 @@ class Admin extends CI_Controller {
         if(empty($role)){
             redirect('login/admin');
         }
-        $this->load->model(['madmin','mmember','msaldo','mpinjaman','mdana','mtagihan','mrating']);
+        $this->load->model(['madmin','mmember','msaldo','mpinjaman','mdana','mtagihan','mrating','mnotification']);
         $this->setstartpinjaman();
+        $this->kirimtagihanpinjaman();
+        $this->kirimdenda();
 
 	}
 	public function index(){
@@ -20,40 +22,78 @@ class Admin extends CI_Controller {
         $pinjaman = $this->mpinjaman->ambilPinjaman(['status_pengajuan'=>0]);
         $dana = $this->mdana->ambilPemindahan(['status'=>0]);
         $pencairan = $this->msaldo->ambilPencairan(['status'=>0]);
+        $tagihan = $this->mtagihan->ambilTagihan(['status'=>0,'fotobukti !='=>'']);
         $data['member']= $member;
         $data['dana']=$dana;
         $data['saldo'] =$saldo;
         $data['pencairan']= $pencairan;
         $data['pinjaman']= $pinjaman;
+        $data['tagihan'] = $tagihan;
         $this->load->view('partials/header');
         $this->load->view('admin/partials/topbar');
         $this->load->view('admin/partials/sidebar');
         $this->load->view('admin/index',$data);
         $this->load->view('partials/footer');
 	}
-    public function kirimtagihanpinjaman($id){
-
-    }
-    public function kirimtagihan(){
+    public function kirimtagihanpinjaman(){
         $pinjaman = $this->mpinjaman->ambilPinjaman(['status_pengajuan'=>1,'status_pinjaman'=>0,'start_at != '=>'0000-00-00']);
         foreach($pinjaman as $p){
-            $next=strtotime('+1 month', strtotime($p->start_at));
+            $tagihan = $this->mtagihan->ambilTagihanBulanan($p->id)[0];
+            $next = strtotime('+1 month', strtotime($p->start_at));
             $waktu = strtotime('-5 days',$next);
             $waktu_date = date("Y-m-d", $waktu);
-            $tagihan = $this->mtagihan->ambilTagihanBulanan($p->id);
-            $stagihan = $this->mtagihan->ambilTagihan(['id_pinjaman'=>$p->id]);
-            if(count($tagihan)==0){
-                $data=array(
-                    'id_member'=>$p->id_member,
-                    'id_pinjaman'=>$p->id,
-                    'angsuranke'=>count($stagihan)+1,
-                    'totaltagihan'=>100000,
-                    'tgltagihan'=>Date("Y-m-d")
-                );
-                $this->mtagihan->kirimtagihan($data);
+            if($waktu_date ==date("Y-m-d")){
+                $checknotif = $this->mnotification->userNotification(['id_member'=>$p->id_member,'tgl_dibuat LIKE '=>'%'.$waktu_date.'%','notification LIKE '=>'%tagihan%']);
+                if(count($checknotif)==0){
+                    $datanotif = array(
+                        'id_member'=>$p->id_member,
+                        'notification'=>'Segera bayar tagihan anda sebelum terkena denda <a  href="'.base_url().'pinjaman/tagihan/'.$p->id.'">Bayar Tagihan</a>',
+                        'id_dokumen'=>0,
+                        'is_read'=>0
+                    );
+                    $this->madmin->kirimtagihan($datanotif);                    
+                }
+
+            }
+
+        }
+    }
+    public function kirimdenda(){
+        $pinjaman = $this->mpinjaman->ambilPinjaman(['status_pengajuan'=>1,'status_pinjaman'=>0,'start_at != '=>'0000-00-00']);
+        foreach($pinjaman as $p){
+            $tagihan = $this->mtagihan->ambilTagihanBulanan($p->id)[0];
+            $start = strtotime($tagihan->tgltagihan);
+            // $start = strtotime("-1 days",strtotime(Date("Y-m-d")));
+            $now = time();
+            $selisih = ($start-$now)/ (60 * 60 * 24);
+            $selisih=ceil($selisih); 
+            $denda=ceil(abs($selisih)/7)/100*$tagihan->totaltagihan;
+            // echo $selisih<0?"habis":"belum";    
+            if($selisih<0){
+                $this->madmin->kirimdenda($tagihan->id,$denda);                                
             }
         }
     }
+    // public function kirimtagihan(){
+    //     $pinjaman = $this->mpinjaman->ambilPinjaman(['status_pengajuan'=>1,'status_pinjaman'=>0,'start_at != '=>'0000-00-00']);
+    //     foreach($pinjaman as $p){
+    //         $next=strtotime('+1 month', strtotime($p->start_at));
+    //         $waktu = strtotime('-5 days',$next);
+    //         $waktu_date = date("Y-m-d", $waktu);
+    //         $tagihan = $this->mtagihan->ambilTagihanBulanan($p->id);
+    //         $stagihan = $this->mtagihan->ambilTagihan(['id_pinjaman'=>$p->id]);
+    //         if(count($tagihan)==0){
+    //             $data=array(
+    //                 'id_member'=>$p->id_member,
+    //                 'id_pinjaman'=>$p->id,
+    //                 'angsuranke'=>count($stagihan)+1,
+    //                 'totaltagihan'=>100000,
+    //                 'tgltagihan'=>Date("Y-m-d")
+    //             );
+    //             $this->mtagihan->kirimtagihan($data);
+    //         }
+    //     }
+    // }
     public function setstartpinjaman(){
         $pinjaman = $this->mpinjaman->ambilPinjaman(['status_pengajuan'=>1,'status_pinjaman'=>0]);
         foreach($pinjaman as $p){
@@ -124,7 +164,16 @@ class Admin extends CI_Controller {
         $data['member'] = $member;
         $data['pinjam'] = $pinjam;
         if($this->input->server('REQUEST_METHOD') == 'POST'){
+            $this->load->library('pdf');
             $data = $this->input->post();
+            $filename=$member->nama_member."_invoice_".$pinjam->nama_pinjaman."_".Date("dmYis").".pdf";
+            $this->pdf->setPaper('A4','portrait');
+            $this->pdf->filename = $filename;
+            $data['filename'] = $filename;
+            $data['kode_pinjaman']=$pinjam->kode_pinjaman;
+            $data['pinjam'] = $pinjam;
+            $data['dana'] = $dana;
+            $this->pdf->load_view('member/invoice',$data);
             $status = isset($data['reject'])?2:1;
             $data['status']=$status;
             $data['id']=$id;
@@ -197,12 +246,57 @@ class Admin extends CI_Controller {
     public function historypinjaman($id){
         $pindah = $this->mdana->ambilPemindahan(['id_pinjaman'=>$id]);
         $tagihan = $this->mtagihan->ambilTagihan(['id_pinjaman'=>$id]);
+        $pinjam = $this->mpinjaman->ambilPinjaman(['id'=>$id])[0];
         $data['pindah'] = $pindah;
         $data['tagihan'] = $tagihan;
+        $data['pinjam'] = $pinjam;
         $this->load->view('partials/header');
         $this->load->view('admin/partials/topbar');
         $this->load->view('admin/partials/sidebar');
         $this->load->view('admin/detailhistorypinjaman',$data);
+        $this->load->view('partials/footer');
+    }
+    public function kembalikanpinjaman($id){
+        $pindah = $this->mdana->ambilPemindahan(['id_pinjaman'=>$id]);
+        $data['pindah'] = $pindah;
+        if($this->input->server('REQUEST_METHOD') == 'POST'){
+            $this->mdana->pengembalian($id);
+            $msg='Semua dana berhasil dikembalikan ke saldo member';
+            setcookie('pesan_kembalidana',$msg,time()+60,'/');
+            redirect('/admin/pinjaman');
+        }
+        $this->load->view('partials/header');
+        $this->load->view('admin/partials/topbar');
+        $this->load->view('admin/partials/sidebar');
+        $this->load->view('admin/detailkembalipinjaman',$data);
+        $this->load->view('partials/footer');
+    }
+    public function verifikasitagihan(){
+        $tagihan = $this->mtagihan->ambilTagihan(['status'=>0,'fotobukti !='=>'']);
+        $data['tagihan'] = $tagihan;
+        $this->load->view('partials/header');
+        $this->load->view('admin/partials/topbar');
+        $this->load->view('admin/partials/sidebar');
+        $this->load->view('admin/verifikasitagihan',$data);
+        $this->load->view('partials/footer');
+    }
+    public function detailverifikasitagihan($id){
+        $tagihan = $this->mtagihan->ambilTagihan(['id'=>$id])[0];
+        $member = $this->mmember->ambilSemuaMember(array('id_member'=>$tagihan->id_member))[0];
+        $data['tagihan'] = $tagihan;
+        $data['member'] = $member;
+        if($this->input->server('REQUEST_METHOD') == 'POST'){
+            $data = $this->input->post();
+            $status = isset($data['reject'])?2:1;
+            $data['status']=$status;
+            $data['id']=$id;
+            $this->mtagihan->updateTagihan($data);
+            redirect('/admin/verifikasitagihan');
+        }
+        $this->load->view('partials/header');
+        $this->load->view('admin/partials/topbar');
+        $this->load->view('admin/partials/sidebar');
+        $this->load->view('admin/detailverifikasitagihan',$data);
         $this->load->view('partials/footer');
     }
     public function verifikasipinjaman(){

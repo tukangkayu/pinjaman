@@ -13,8 +13,11 @@
         <input type="password" name="password" id="password"  class="form-control" placeholder="Password" required="">
       </div>
       <div class="row">
-        <div class="col-xs-4">
+        <div class="col-xs-12  form-group">
           <button type="submit" class="btn btn-primary btn-block btn-flat">Login</button>
+        </div>
+        <div class="col-xs-12">
+          <a href="<?= base_url() ?>" class="btn btn-default btn-block btn-flat">Back To Home</a>
         </div>
         <!-- /.col -->
       </div>

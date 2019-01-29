@@ -8,6 +8,7 @@ Class Mpinjaman extends CI_Model{
 		return $this->db->get()->result();
 	}
 	public function ambilPinjaman($where){
+
 		$data= $this->db->get_where('pinjaman',$where)->result();
 		return $data;
 	}

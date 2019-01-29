@@ -19,6 +19,14 @@
           <h3 class="box-title"><i class="fa fa-tag"></i>Data Pinjaman Sedang Berjalan</h3>
         </div>
         <div class="box-body">
+<?php
+  if(isset($_COOKIE['pesan_kembalidana'])):
+  ?>
+  <div class="alert alert-info" role="alert">
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <?= $_COOKIE['pesan_kembalidana']; ?>
+  </div>
+  <?php unset($_COOKIE['pesan_kembalidana']);setcookie('pesan_kembalidana','',time()-3600,'/'); endif;?>
           <table class="table table-bordered data-table">
             <thead>
               <tr>
@@ -29,7 +37,8 @@
                 <th>Tenor</th>
                 <th>Bunga</th>
                 <th>Jenis Pinjaman</th>
-                <th>Aksi</th>
+                <th>Akhir</th>
+                <th width="180">Aksi</th>
               </tr>
             </thead>
             <tbody>
@@ -37,8 +46,16 @@
             $i=0;
             $kategori = ["Personal","UKM Kecil","Perusahaan Besar"];
             foreach($pinjamanjalan as $h){
-              $member=$this->mmember->ambilSemuaMember(['id_member'=>$h->id_member])[0];
-                  $i++;
+                $member=$this->mmember->ambilSemuaMember(['id_member'=>$h->id_member])[0];
+                $i++;
+                $day=strtotime(Date("Y-m-d"))-(strtotime($h->updated_at));
+                $day = $day / (60 * 60 * 24);
+                $day= (int)$day;
+                  // $enddays = strtotime('+'.(30-$day).' days', strtotime($p->updated_at));
+                $enddays = strtotime('+1 month', strtotime($h->updated_at));
+                $enddays = strtotime('-'.($day).' days', $enddays);
+                $end = $enddays - strtotime($h->updated_at);
+                $text = $end<=0?"Berakhir":($end / (60 * 60 * 24))." hari lagi";
               ?>
               <tr>
                 <td><?= $i ?></td>
@@ -48,9 +65,21 @@
                 <td><?= $h->lama_pinjaman ?> Bulan</td>
                 <td><?= $h->bunga_efektif ?>%</td>
                 <td><?= $kategori[$h->kategori_pinjaman] ?> </td>
+                <td><?= $text ?></td>
                 <td>
                   <a href="<?= base_url() ?>admin/detailpinjaman/<?= $h->id ?>" class="btn btn-primary">Detail</a>
-                  <a href="<?= base_url() ?>admin/historypinjaman/<?= $h->id ?>" class="btn btn-primary">History</a>
+                  
+                  <?php
+                    if($end<=0){
+                    ?>
+                    <a href="<?= base_url() ?>admin/kembalikanpinjaman/<?= $h->id ?>" class="btn btn-primary">Kembalikan Dana</a>
+                    <?php
+                    }else{
+                    ?>
+                    <a href="<?= base_url() ?>admin/historypinjaman/<?= $h->id ?>" class="btn btn-primary">History</a>
+                    <?php
+                    }
+                  ?>
                 </td>
               </tr>
               <?php
@@ -77,6 +106,7 @@
                 <th>Tenor</th>
                 <th>Bunga</th>
                 <th>Jenis Pinjaman</th>
+                <th>Status</th>
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -86,7 +116,8 @@
             $kategori = ["Personal","UKM Kecil","Perusahaan Besar"];
             foreach($pinjamanselesai as $h){
               $member=$this->mmember->ambilSemuaMember(['id_member'=>$h->id_member])[0];
-                  $i++;
+              $i++;
+              $status =  date("d-m-Y",strtotime($h->start_at))=="30-11--0001"?"Tidak Terkumpul":"Terkumpul";
               ?>
               <tr>
                 <td><?= $i ?></td>
@@ -96,6 +127,7 @@
                 <td><?= $h->lama_pinjaman ?> Bulan</td>
                 <td><?= $h->bunga_efektif ?>%</td>
                 <td><?= $kategori[$h->kategori_pinjaman] ?> </td>
+                <td><?= $status ?></td>
                 <td>
                   <a href="<?= base_url() ?>admin/detailpinjaman/<?= $h->id ?>" class="btn btn-primary">Detail</a>
                   <a href="<?= base_url() ?>admin/historypinjaman/<?= $h->id ?>" class="btn btn-primary">History</a>

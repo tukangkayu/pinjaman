@@ -107,6 +107,7 @@ class Pinjaman extends CI_Controller {
 		@$pinjaman = $this->mpinjaman->ambilPinjaman(['id'=>$id])[0];
 		@$detail = $this->mpinjaman->detailPinjaman(['id_pinjaman'=>$id])[0];
 		@$detailusaha = $this->mpinjaman->detailUsaha(['id_pinjaman'=>$id])[0];
+		@$member = $this->Mmember->ambilSemuaMember(['id_member'=>$_SESSION['id_member']])[0];
 		$penawaran = $this->mpinjaman->ambilPinjaman(['id_member'=>$pinjaman->id_member,'status_pengajuan'=>1,'status_pinjaman'=>0]);
 		$aktif = $this->mpinjaman->ambilPinjaman(['id_member'=>$pinjaman->id_member,'status_pengajuan'=>1,'status_pinjaman'=>1]);
 		$lunas = $this->mpinjaman->ambilPinjaman(['id_member'=>$pinjaman->id_member,'status_pengajuan'=>1,'status_pinjaman'=>2]);
@@ -149,6 +150,7 @@ class Pinjaman extends CI_Controller {
 		$data['totallunas'] = $totallunas;
 		$data['rating']=$rating;
 		$data['totalrating'] = $totalrating;
+		$data['member'] = $member;
 		$this->load->view('partials/headerhome');
 		$this->load->view('partials/navbar');
         $this->load->view('member/detail',$data);
@@ -160,6 +162,19 @@ class Pinjaman extends CI_Controller {
         $this->load->view('partials/headerhome');
         $this->load->view('partials/navbar');
         $this->load->view('member/detailtagihan',$data);
+        $this->load->view('partials/footerhome');
+    }
+    public function bayartagihan($id){
+        $data=[];
+        if($this->input->server('REQUEST_METHOD') == 'POST'){
+            $data = $this->input->post();
+            $data['id'] = $id;
+            $this->mtagihan->uploadBukti($data);
+            redirect('/pinjaman/tagihan/'.$id);
+        }
+        $this->load->view('partials/headerhome');
+        $this->load->view('partials/navbar');
+        $this->load->view('member/bayartagihan',$data);
         $this->load->view('partials/footerhome');
     }
 }

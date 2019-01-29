@@ -74,10 +74,10 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>0</h3>
+              <h3><?= count($tagihan) ?></h3>
               <p>Menunggu verifikasi angsuran & denda</p>
             </div>
-            <a href="<?= base_url() ?>" class="small-box-footer">Lebih Lengkap <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?= base_url() ?>admin/verifikasitagihan" class="small-box-footer">Lebih Lengkap <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->

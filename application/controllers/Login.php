@@ -5,7 +5,7 @@ class Login extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
         session_start();
-		$this->load->model(['mlogin','madmin']);
+		$this->load->model(['mlogin','madmin','mmember']);
 	}
 	public function index(){
 		@$id_member = $_SESSION['id_member'];
@@ -65,16 +65,24 @@ class Login extends CI_Controller {
         $msg='';
         if($this->input->server('REQUEST_METHOD') == 'POST'){
             $data = $this->input->post();
-            $register = $this->mlogin->register($data);
-            if($register){
-                $msg = 'Berhasil Daftar Silahkan Login';
-                setcookie('pesan_register',$msg,time()+60,'/');
-                redirect('/login/register');
+            $check = $this->mmember->ambilSemuaMember(['email_member'=>$data['email']]);
+            if(count($check)==0){
+                $register = $this->mlogin->register($data);
+                if($register){
+                    $msg = 'Berhasil Daftar Silahkan Login';
+                    setcookie('pesan_register',$msg,time()+60,'/');
+                    redirect('/login/register');
+                }else{
+                    $msg = 'Terjadi Kesalahan coba lagi';
+                    setcookie('pesan_register',$msg,time()+60,'/');
+                    redirect('/login/register');
+                }                
             }else{
-                $msg = 'Terjadi Kesalahan coba lagi';
+                $msg= 'Email sudah terdaftar.Silahkan gunakan email lain';
                 setcookie('pesan_register',$msg,time()+60,'/');
                 redirect('/login/register');
             }
+
         }
         $data['msg']=$msg;
         $this->load->view('partials/headerhome');

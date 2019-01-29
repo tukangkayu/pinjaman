@@ -83,12 +83,12 @@ $percent = 100-$percent;
 			                <b><?= Date("d/m/Y",$enddays) ?></b>
 						</div>
 					</div>
-					<div class="row">
+					<!-- <div class="row">
 						<div class="col-md-12">
 							<span>Tujuan Pengalangan Dana</span><br>
 							<b><?= $detail->tujuanpinjaman ?></b>
 						</div>
-					</div>
+					</div> -->
 					<div class="row">
 						<div class="col-md-12">
 							<span>Jaminan dan Agunan</span><br>
@@ -193,7 +193,8 @@ $percent = 100-$percent;
 	          	<?php
 	          	// if($pinjam->status_pinjaman==1){	  
 	          	$userrating = $this->mrating->ambilRating(['id_member'=>$_SESSION['id_member'],'id_pinjaman'=>$pinjaman->id]);
-	          	if(count($userrating)==0){		
+	          	// print_r($pinjaman);
+	          	if(count($userrating)==0 && $pinjaman->status_pinjaman==1 && $pinjaman->start_at!="0000-00-00"){		
 	          	?>
 	          	<form method="post" action="<?= base_url() ?>member/berirating/<?= $pinjaman->id ?>">
 		          	<div class="form-group">
@@ -210,7 +211,16 @@ $percent = 100-$percent;
 	          </div>
 			</div>
 			<?php 
-			if(($pinjaman->jumlah_pinjaman - $total)>0){
+			$day=strtotime(Date("Y-m-d"))-(strtotime($pinjaman->updated_at));
+        	$day = $day / (60 * 60 * 24);
+        	$day= (int)$day;
+        	$enddays = strtotime('+1 month', strtotime($pinjaman->updated_at));
+            $enddays = strtotime('-'.($day).' days', $enddays);
+            $end = $enddays - strtotime($pinjaman->updated_at);
+            // $text = $end<=0?"Berakhir":($end / (60 * 60 * 24))." hari lagi";
+			if(($pinjaman->jumlah_pinjaman - $total)>0 && $end>0){
+				$max = $pinjaman->jumlah_pinjaman - $total;
+				$max = $member->saldo < $max?$member->saldo:$max;
 			?>
 			<div class="col-md-6">
 				<p>Total Pinjaman yang masih dibutuhkan <span class="auto-numeric"><?= ($pinjaman->jumlah_pinjaman - $total)  ?></span></p>
@@ -219,7 +229,7 @@ $percent = 100-$percent;
 						<label>Masukkan uang yang akan dipinjamkan</label>
 						<div class="row">
 							<div class="col-md-9">
-								<input type="number" name="jumlahuang" id="hitung" min="100000" max="<?= ($pinjaman->jumlah_pinjaman - $total)  ?>" class="form-control" required="">								
+								<input type="number" name="jumlahuang" id="hitung" min="100000" max="<?= $max  ?>" class="form-control" required="">								
 								<p class="help-block" id="jumlahdapat"></p>
 							</div>
 							<div class="col-md-3">
