@@ -123,7 +123,7 @@ class Member extends CI_Controller {
         $totalpencairan=0;
         $cair = $this->msaldo->ambilPencairan(['id_member'=>$_SESSION['id_member'],'jenis'=>1,'status'=>1]);
         foreach($cair as $c){
-            $totalpencairan += ($c->jumlah*1.01);
+            $totalpencairan += ($c->jumlah/0.99);
         }
         $data['totalinvestasi'] = $totalinvestasi;
         $data['totalcair'] = $totalcair-$totalpencairan;
