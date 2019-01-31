@@ -61,10 +61,11 @@
 </div>
 <script type="text/javascript">
   var max = "<?= $maxcair*0.99 ?>";
+
   // var jumlah = $("#jumlah");
   var jumlah=document.getElementById("jumlah");
   function validate(){
-      if(jumlah.value>max){
+      if(parseInt(jumlah.value)>parseInt(max)){
           jumlah.setCustomValidity("Saldo tidak cukup untuk ditarik.Max ditarik adalah "+max);
       }else{
           jumlah.setCustomValidity("");

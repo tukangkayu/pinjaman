@@ -115,18 +115,20 @@ class Member extends CI_Controller {
             $totalinvestasi+=$totaldana;
         }
         $totalcair=0;
-        $pinjamcair = $this->mpinjaman->ambilPinjaman(['id_member'=>$_SESSION['id_member'],'status_pengajuan'=>1,'status_pinjaman'=>0]);
+        $pinjamcair = $this->mpinjaman->ambilPinjaman(['id_member'=>$_SESSION['id_member'],'status_pengajuan'=>1]);
         foreach($pinjamcair as $p){
             $totaldana = $this->db->query("select sum(jumlah) as total from pemindahandana where status=1 and id_pinjaman=".$p->id)->result()[0]->total;
             $totalcair+=$totaldana;
         }
+
         $totalpencairan=0;
         $cair = $this->msaldo->ambilPencairan(['id_member'=>$_SESSION['id_member'],'jenis'=>1,'status'=>1]);
         foreach($cair as $c){
             $totalpencairan += ($c->jumlah/0.99);
         }
+        $data['banyakcair']= count($cair);
         $data['totalinvestasi'] = $totalinvestasi;
-        $data['totalcair'] = $totalcair-$totalpencairan;
+        $data['totalcair'] = ($totalcair-$totalpencairan);
         $data['member']=$member;
         $this->load->view('partials/headerhome');
         $this->load->view('partials/navbar');
@@ -205,7 +207,7 @@ class Member extends CI_Controller {
         $totalpencairan=0;
         $cair = $this->msaldo->ambilPencairan(['id_member'=>$_SESSION['id_member'],'jenis'=>1,'status'=>1]);
         foreach($cair as $c){
-            $totalpencairan += $c->jumlah;
+            $totalpencairan += $c->jumlah/0.99;
         }
         $data['maxcair'] = $totalcair-$totalpencairan;
         if($this->input->server('REQUEST_METHOD') == 'POST'){
