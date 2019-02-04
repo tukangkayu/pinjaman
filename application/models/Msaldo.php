@@ -77,6 +77,13 @@ Class Msaldo extends CI_Model{
 				'is_read'=>0
 			);
 			$this->db->insert('notification',$datanotif);
+			$savehistory = array(
+				'id_member' => $cair->id_member,
+				'id_pencairan'=>$cair->id,
+				'bunga'=>round($cair->jumlah/0.99*0.01)
+			);
+			$this->db->insert('historybungapencairan',$savehistory);
+
 		}
 		$sql="update pencairandana set status=".$data['status']." where id = ".$data['id'];
 		return $this->db->query($sql);

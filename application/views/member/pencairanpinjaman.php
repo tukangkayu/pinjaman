@@ -16,6 +16,7 @@
               <div class="form-group">
                 <label>Jumlah</label>
                 <input type="number" name="jumlah" id="jumlah" min="10000"  class="form-control" placeholder="Masukkan jumlah" required="">
+                <p class="help-block">Max <?= (round($maxcair*0.99)) ?></p>
               </div>
           </div>
           <div class="col-md-4">
@@ -60,7 +61,7 @@
   </div>
 </div>
 <script type="text/javascript">
-  var max = "<?= $maxcair*0.99 ?>";
+  var max = "<?= (round($maxcair*0.99)) ?>";
 
   // var jumlah = $("#jumlah");
   var jumlah=document.getElementById("jumlah");

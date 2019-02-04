@@ -12,7 +12,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Saldo Pinjaman Saat Ini</label>
-            <input type="text" class="auto-numeric" value="<?= $banyakcair>0?$totalcair*0.99:$totalcair; ?>" readonly="">
+            <input type="text" class="auto-numeric" value="<?= $banyakcair>0?$totalcair:$totalcair+$totalbunga ?>" readonly="">
           </div>
         </div>
       </div>

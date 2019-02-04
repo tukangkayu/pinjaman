@@ -35,7 +35,7 @@ class Admin extends CI_Controller {
     public function kirimtagihanpinjaman(){
         $pinjaman = $this->mpinjaman->ambilPinjaman(['status_pengajuan'=>1,'status_pinjaman'=>0,'start_at != '=>'0000-00-00']);
         foreach($pinjaman as $p){
-            $tagihan = $this->mtagihan->ambilTagihanBulanan($p->id)[0];
+            // $tagihan = $this->mtagihan->ambilTagihanBulanan($p->id)[0];
             $next = strtotime('+1 month', strtotime($p->start_at));
             $waktu = strtotime('-5 days',$next);
             $waktu_date = date("Y-m-d", $waktu);
@@ -50,25 +50,27 @@ class Admin extends CI_Controller {
                     );
                     $this->madmin->kirimtagihan($datanotif);                    
                 }
-
             }
-
         }
     }
     public function kirimdenda(){
         $pinjaman = $this->mpinjaman->ambilPinjaman(['status_pengajuan'=>1,'status_pinjaman'=>0,'start_at != '=>'0000-00-00']);
         foreach($pinjaman as $p){
-            $tagihan = $this->mtagihan->ambilTagihanBulanan($p->id)[0];
-            $start = strtotime($tagihan->tgltagihan);
-            // $start = strtotime("-1 days",strtotime(Date("Y-m-d")));
-            $now = time();
-            $selisih = ($start-$now)/ (60 * 60 * 24);
-            $selisih=ceil($selisih); 
-            $denda=ceil(abs($selisih)/7)/100*$tagihan->totaltagihan;
-            // echo $selisih<0?"habis":"belum";    
-            if($selisih<0){
-                $this->madmin->kirimdenda($tagihan->id,$denda);                                
+            $tagihan = $this->mtagihan->ambilTagihanBulanan($p->id);
+            if(count($tagihan)>0){
+                $tagihan= $tagihan[0];
+                $start = strtotime($tagihan->tgltagihan);
+                // $start = strtotime("-1 days",strtotime(Date("Y-m-d")));
+                $now = time();
+                $selisih = ($start-$now)/ (60 * 60 * 24);
+                $selisih=ceil($selisih); 
+                $denda=ceil(abs($selisih)/7)/100*$tagihan->totaltagihan;
+                // echo $selisih<0?"habis":"belum";    
+                if($selisih<0){
+                    $this->madmin->kirimdenda($tagihan->id,$denda);                                
+                }                
             }
+
         }
     }
     // public function kirimtagihan(){
@@ -410,8 +412,6 @@ class Admin extends CI_Controller {
         $this->load->view('admin/pinjaman',$data);
         $this->load->view('partials/footer');
     }
-
-
     //login
     public function logout(){
         session_unset();

@@ -198,8 +198,8 @@ $text = $percent==100?"Berakhir":$text;
 	          	<?php
 	          	// if($pinjam->status_pinjaman==1){	  
 	          	$userrating = $this->mrating->ambilRating(['id_member'=>$_SESSION['id_member'],'id_pinjaman'=>$pinjaman->id]);
-	          	// print_r($pinjaman);
-	          	if(count($userrating)==0 && $pinjaman->status_pinjaman==1 && $pinjaman->start_at!="0000-00-00"){		
+	          	$userdana = $this->mdana->ambilPemindahan(['id_member'=>$_SESSION['id_member'],'id_pinjaman'=>$pinjaman->id]);
+	          	if(count($userrating)==0 && $pinjaman->status_pinjaman==1 && $pinjaman->start_at!="0000-00-00" && count($userdana)>0){		
 	          	?>
 	          	<form method="post" action="<?= base_url() ?>member/berirating/<?= $pinjaman->id ?>">
 		          	<div class="form-group">

@@ -108,9 +108,9 @@ class Pinjaman extends CI_Controller {
 		@$detail = $this->mpinjaman->detailPinjaman(['id_pinjaman'=>$id])[0];
 		@$detailusaha = $this->mpinjaman->detailUsaha(['id_pinjaman'=>$id])[0];
 		@$member = $this->Mmember->ambilSemuaMember(['id_member'=>$_SESSION['id_member']])[0];
-		$penawaran = $this->mpinjaman->ambilPinjaman(['id_member'=>$pinjaman->id_member,'status_pengajuan'=>1,'status_pinjaman'=>0]);
-		$aktif = $this->mpinjaman->ambilPinjaman(['id_member'=>$pinjaman->id_member,'status_pengajuan'=>1,'status_pinjaman'=>1]);
-		$lunas = $this->mpinjaman->ambilPinjaman(['id_member'=>$pinjaman->id_member,'status_pengajuan'=>1,'status_pinjaman'=>2]);
+		$penawaran = $this->mpinjaman->ambilPinjaman(['id_member'=>$pinjaman->id_member,'status_pengajuan'=>0,'status_pinjaman'=>0]);
+		$aktif = $this->mpinjaman->ambilPinjaman(['id_member'=>$pinjaman->id_member,'status_pengajuan'=>1,'status_pinjaman'=>0]);
+		$lunas = $this->mpinjaman->ambilPinjaman(['id_member'=>$pinjaman->id_member,'status_pengajuan'=>1,'status_pinjaman'=>1]);
 		$rating = $this->mrating->ambilRating(['id_pinjaman'=>$id]);
 		$totalpenawaran = 0;
 		$totalaktif = 0;
