@@ -11,7 +11,26 @@ class Admin extends CI_Controller {
         $this->setstartpinjaman();
         $this->kirimtagihanpinjaman();
         $this->kirimdenda();
+        $this->cekselesai();
 	}
+    public function cekselesai(){
+        $pinjamanjalan = $this->mpinjaman->ambilPinjaman(['status_pengajuan'=>1,'status_pinjaman'=>0]);
+        foreach($pinjamanjalan as $h){
+            $day=strtotime(Date("Y-m-d"))-(strtotime($h->updated_at));
+            $day = $day / (60 * 60 * 24);
+            $day= (int)$day;
+              // $enddays = strtotime('+'.(30-$day).' days', strtotime($p->updated_at));
+            $enddays = strtotime('+30 days', strtotime($h->updated_at));
+            $enddays = strtotime('-'.($day).' days', $enddays);
+            $end = $enddays - strtotime($h->updated_at);
+            $text = $end<=0?"Berakhir":($end / (60 * 60 * 24))." hari lagi";
+            $tagihan = $this->mtagihan->ambilTagihan(['id_pinjaman'=>$h->id,'status'=>1]);
+            $tagihan = count($tagihan);
+            if($end<=0 && $h->lama_pinjaman==$tagihan){
+                $this->madmin->selesai($h->id);
+            }
+        }
+    }
 	public function index(){
         $data=[];
         $saldo = $this->msaldo->ambilSaldo(array('status'=>0));

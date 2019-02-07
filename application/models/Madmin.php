@@ -1,5 +1,9 @@
 <?php
 Class Madmin extends CI_Model{
+	public function selesai($id){
+		$this->db->where(['id'=>$id]);
+		$this->db->update('pinjaman',['status_pinjaman'=>1,'end_at'=>Date("Y-m-d")]);
+	}
 	public function ambilAdmin($email){
 		$admin = $this->db->query('select * from admin where email_admin = "'.$email.'"')->row();
 		return $admin;
