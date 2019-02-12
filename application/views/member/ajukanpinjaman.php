@@ -6,7 +6,8 @@
 			<form method="post" enctype='multipart/form-data'>
 				<div class="form-group">
 					<label>Judul Pengajuan</label>
-					<input type="text" name="judul" class="form-control" required="">
+					<input type="text" name="judul" pattern="[A-Za-z]{1,50}" required
+        title="Just String" class="form-control" >
 				</div>
 				<div class="form-group">
 					<label>Kategori Pinjaman</label>
@@ -33,7 +34,7 @@
 					<div class="row">
 						<div class="col-md-4">
 							<label>Lama Pinjaman</label>
-							<select name="lamapinjaman" id="" class="form-control">
+							<select name="lamapinjaman" id="" class="form-control" required="">
 								<option value="1">1 Bulan</option>
 								<option value="3">3 Bulan</option>
 								<option value="6">6 Bulan</option>
@@ -42,7 +43,7 @@
 						</div>
 						<div class="col-md-4">
 							<label>Bunga Efektif</label>
-							<select name="bunga" id="" class="form-control">
+							<select name="bunga" id="" class="form-control" required="">
 								<option value="15">15%</option>
 								<option value="18">18%</option>
 								<option value="21">21%</option>
@@ -51,7 +52,7 @@
 						</div>
 						<div class="col-md-4">
 							<label>Pembayaran Pinjaman Pokok</label>
-							<select name="carabayar" id="" class="form-control">
+							<select name="carabayar" id="" class="form-control" required="">
 								<option value="0">Per Bulan</option>
 								<option value="1">Akhir Pinjaman</option>
 							</select>
@@ -62,11 +63,11 @@
 					<div class="row">
 						<div class="col-md-6">
 							<label>No NPWP</label>
-							<input type="text" name="npwp" class="form-control">
+							<input type="number"  name="npwp" class="form-control" required="">
 						</div>
 						<div class="col-md-6">
 							<label>Scan NPWP</label>
-							<input type="file" name="fotonpwp" class="form-control">
+							<input type="file" name="fotonpwp" class="form-control" required="">
 						</div>
 					</div>
 				</div>

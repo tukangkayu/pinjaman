@@ -13,15 +13,17 @@
         <div class="col-md-10">          
           <div class="form-group">
             <label for="">Nama Bank*</label>
-            <input type="text" name="namabank" class="form-control" value="<?= $member->namabank ?>" required>
+            <input type="text" name="namabank" pattern="[A-Za-z]{1,50}" required
+        title="Just String" class="form-control" value="<?= $member->namabank ?>" >
           </div>
           <div class="form-group">
             <label for="">No Rekening*</label>
-            <input type="text" name="norekening" class="form-control" value="<?= $member->norekening ?>" required>
+            <input type="number" pattern="[0-9]" title="Just Number" name="norekening" class="form-control" value="<?= $member->norekening ?>" required>
           </div>
           <div class="form-group">
             <label for="">Nama di rekening*</label>
-            <input type="text" name="namarekening" class="form-control" required="" value="<?= $member->namarekening ?>">
+            <input type="text" name="namarekening" pattern="[A-Za-z]{1,50}" required
+        title="Just String" class="form-control"  value="<?= $member->namarekening ?>">
           </div>
           <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block">Update</button>

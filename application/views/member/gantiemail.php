@@ -13,11 +13,11 @@
         <div class="col-md-12">          
           <div class="form-group">
             <label for="">Email Lama*</label>
-            <input type="text" name="emaillama" class="form-control" value="<?= $member->email_member ?>">
+            <input type="email" name="emaillama" class="form-control" value="<?= $member->email_member ?>" required="">
           </div>
           <div class="form-group">
             <label for="">Email Baru*</label>
-            <input type="text" name="emailbaru" class="form-control">
+            <input type="email" required="" name="emailbaru" class="form-control">
           </div>
           <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block">Update</button>

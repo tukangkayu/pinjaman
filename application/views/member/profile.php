@@ -15,13 +15,14 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Nama Lengkap*</label>
-                <input type="text" name="nama" class="form-control" value="<?= $member->nama_member ?>" required="">
+                <input type="text" name="nama"  class="form-control" value="<?= $member->nama_member ?>" pattern="[A-Za-z]{1,50}" required
+        title="Just String">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Nomor KTP*</label>
-                <input type="text" name="noktp" class="form-control" value="<?= $member->noktp ?>" required="">
+                <input type="number" pattern="[0-9]" title="Just Number" name="noktp" id="noktp" class="form-control" value="<?= $member->noktp ?>" required="">
               </div>
             </div>
           </div>
@@ -68,7 +69,7 @@
             </div>
             <div class="col-md-4">
               <label>Kode Pos*</label>
-              <input type="text" name="kodepos" class="form-control" value="<?= $member->kodepos ?>" required="">
+              <input type="number" name="kodepos" pattern="[0-9]" title="Just Number" class="form-control" value="<?= $member->kodepos ?>" required="">
             </div>
           </div>
             </div>
@@ -76,13 +77,13 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Handphone 1*</label>
-                <input type="text" name="hp1" class="form-control" value="<?= $member->handphone1 ?>" required="">
+                <input type="number" name="hp1" pattern="[0-9]" title="Just Number" class="form-control" value="<?= $member->handphone1 ?>" required="">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Handphone 2*</label>
-                <input type="text" name="hp2" class="form-control" value="<?= $member->handphone2 ?>" required="">
+                <input type="number" name="hp2" pattern="[0-9]" title="Just Number" class="form-control" value="<?= $member->handphone2 ?>" required="">
               </div>
             </div>
           </div>

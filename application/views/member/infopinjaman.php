@@ -11,6 +11,9 @@
 	$readonly =$pinjaman->kategori_pinjaman==0?"readonly":"";
 	$tab= $pinjaman->kategori_pinjaman==0?"":"data-toggle='tab'";
 	$style=$pinjaman->kategori_pinjaman==0?" style='visibility:hidden'":"";
+	$required_pattern=$pinjaman->kategori_pinjaman==0?"":"pattern='[A-Za-z]{1,50}' required
+        title='Just String'";
+	$required=$pinjaman->kategori_pinjaman==0?"":"required";
 ?>
 <div class="container">
 	<div class="row">
@@ -67,11 +70,11 @@
 					<div class="row">
 						<div class="col-md-6">
 							<label for="">Nama Resmi Usaha</label>
-							<input type="text" name="namausaha" class="form-control">
+							<input type="text" name="namausaha" class="form-control"  <?= $required_pattern  ?>>
 						</div>
 						<div class="col-md-6">
 							<label for="">Jenis Usaha</label>
-							<select name="jenisusaha" id="" class="form-control">
+							<select name="jenisusaha" id="" class="form-control" <?= $required  ?>>
 								<option value="perseorangan">Perseorangan</option>
 								<option value="cv">CV</option>
 							</select>
@@ -82,11 +85,11 @@
 					<div class="row">
 						<div class="col-md-6">
 							<label for="">Tahun Pendirian</label>
-							<input type="text" maxlength="4" name="tahun" class="form-control">
+							<input type="number" max="9999" name="tahun" class="form-control" <?= $required  ?>>
 						</div>
 						<div class="col-md-6">
 							<label for="">Kategori Usaha</label>
-							<select name="kategoriusaha" id="" class="form-control">
+							<select name="kategoriusaha" id="" class="form-control" <?= $required  ?>>
 								<option value="advertising">Advertising</option>
 								<option value="teknologi">Teknologi</option>
 							</select>
@@ -101,14 +104,14 @@
 					<div class="row">
 						<div class="col-md-4">
 							<label for="">Provinsi</label>
-							<select name="provinsi" class="form-control">
+							<select name="provinsi" class="form-control" <?= $required  ?>>
 								<option value="sumatera-utara">Sumatera Utara</option>
 								<option value="jawa-barat">Jawa barat</option>
 							</select>
 						</div>
 						<div class="col-md-4">
 							<label for="">Kabupaten</label>
-							<select name="kabupaten" id="" class="form-control">
+							<select name="kabupaten" id="" class="form-control" <?= $required  ?>>
 								<option value="medan">Medan</option>
 								<option value="deli-serdang">Deli Serdang</option>
 								<option value="bandung">Bandung</option>
@@ -116,7 +119,7 @@
 						</div>
 						<div class="col-md-4">
 							<label>Kode Pos</label>
-							<input type="text" name="kodepos" class="form-control">
+							<input type="number" name="kodepos" class="form-control" <?= $required  ?>>
 						</div>
 					</div>
 			      </div>
@@ -124,11 +127,11 @@
 					<div class="row">
 						<div class="col-md-6">
 							<label for="">No Telepon 1</label>
-							<input type="text" name="telpon1" class="form-control">
+							<input type="number"  name="telpon1" class="form-control" <?= $required  ?>>
 						</div>
 						<div class="col-md-6">
 							<label for="">No Telepon 2</label>
-							<input type="text" name="telpon2" class="form-control">
+							<input type="number" name="telpon2" class="form-control">
 						</div>
 					</div>
 			      </div>
@@ -139,13 +142,13 @@
 
 			      <div class="form-group">
 			      	<label>Foto Usaha</label>
-			      	<input type="file" name="fotousaha" class="form-control">
+			      	<input type="file" name="fotousaha" class="form-control" <?= $required  ?>>
 			      </div>
 			    </div>
 			    <div id="step3" class="tab-pane fade">
 			       <div class="form-group">
 					<label for="">Deskripsi tujuan pengalanggan dana ini dilakukan</label>
-					<textarea name="tujuandana"  class="form-control"></textarea>
+					<textarea name="tujuandana"  class="form-control" required=""></textarea>
 			      </div>
 			    </div>
 			    <div id="step4" class="tab-pane fade">
@@ -186,7 +189,7 @@
 
 				      	<div class="col-md-4">
 				      		<label>Rekening Koran 3 bulan terakhir</label>
-				      		<input type="file" class="form-control" name="filekoran">
+				      		<input type="file" class="form-control" name="filekoran" required="">
 				      	</div>
 			      		<div class="col-md-4" <?= $style ?>>
 				      		<label>Laporan Keuangan Tahunan</label>

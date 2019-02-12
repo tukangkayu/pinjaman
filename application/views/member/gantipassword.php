@@ -14,11 +14,11 @@
         <div class="col-md-12">          
           <div class="form-group">
             <label for="">Password Lama*</label>
-            <input type="text" name="passwordlama" class="form-control">
+            <input type="text" name="passwordlama" class="form-control" required="">
           </div>
           <div class="form-group">
             <label for="">Password Baru*</label>
-            <input type="text" name="passwordbaru" class="form-control">
+            <input type="text" name="passwordbaru" class="form-control" required="">
           </div>
           <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block">Update</button>
