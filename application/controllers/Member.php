@@ -18,13 +18,9 @@ class Member extends CI_Controller {
             if(strtotime($data['tgllahir'])<strtotime($age)){
                 $data['msgtgllahir'] = 'Usia harus 17 tahun atau lebih untuk bisa meminjam';
             }else{
-                if($member->nama_member==''){
-                    $this->Mmember->updateProfile($data);
-                    redirect('/login/logout');                    
-                }else{
-                    $this->Mmember->updateProfile($data);
-                    redirect('/member/profile');                                        
-                }
+                $this->Mmember->updateProfile($data);
+                $_SESSION['nama_member'] = $member->nama_member;
+                redirect('/member/profile');                                        
 
             }
         }

@@ -25,6 +25,7 @@ Class Mtagihan extends CI_Model{
 	public function updateTagihan($data){
 		$tagihan = $this->ambilTagihan(array('id'=>$data['id']))[0];
 		$pinjam = $this->mpinjaman->ambilPinjaman(['id'=>$tagihan->id_pinjaman])[0];
+		$member = $this->mmember->ambilSemuaMember(['id_member'=>$tagihan->id_member])[0];
 		if($data['status']==1){
 			$datanotif = array(
 				'id_member'=>$tagihan->id_member,
@@ -40,7 +41,7 @@ Class Mtagihan extends CI_Model{
 				$bersih = $didapat*(0.99);
 				$datanotif = array(
 					'id_member'=>$d->id_member,
-					'notification'=>'Anda mendapat dana dari angsuran peminjam sebesar '.intval($bersih).' sudah dipotong 1% untuk biaya admin',
+					'notification'=>'Anda mendapat dana dari angsuran ke-'.$tagihan->angsuranke.' dari peminjam '.$member->nama_member.' dengan judul pinjaman '.$pinjam->nama_pinjaman.' sebesar '.intval($bersih).' sudah dipotong 1% untuk biaya admin',
 					'is_read'=>0
 				);
 				$this->db->insert('notification',$datanotif);

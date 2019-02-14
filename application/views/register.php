@@ -12,7 +12,8 @@
     <form method="post">
       <div class="form-group">
         <label>Email</label>
-        <input type="email" placeholder="Masukkan email" name="email" class="form-control" required="">
+        <input type="email" placeholder="Masukkan email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required
+        title="Just String and number" name="email" class="form-control" >
       </div>
       <div class="form-group">
         <label>Password</label>

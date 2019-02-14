@@ -13,11 +13,13 @@
         <div class="col-md-12">          
           <div class="form-group">
             <label for="">Email Lama*</label>
-            <input type="email" name="emaillama" class="form-control" value="<?= $member->email_member ?>" required="">
+            <input type="email" name="emaillama" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required
+        title="Just String and number" class="form-control" value="<?= $member->email_member ?>" >
           </div>
           <div class="form-group">
             <label for="">Email Baru*</label>
-            <input type="email" required="" name="emailbaru" class="form-control">
+            <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required
+        title="Just String and number" name="emailbaru" class="form-control">
           </div>
           <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block">Update</button>
