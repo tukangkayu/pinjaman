@@ -229,6 +229,10 @@ $text = $percent==100?"Berakhir":$text;
 			?>
 			<div class="col-md-6">
 				<p>Total Pinjaman yang masih dibutuhkan <span class="auto-numeric"><?= ($pinjaman->jumlah_pinjaman - $total)  ?></span></p>
+				<?php
+					$pinjaman1 = $this->mpinjaman->ambilPinjaman(['id_member'=>$_SESSION['id_member'],'status_pengajuan'=>1,'status_pinjaman'=>0]);
+					if(count($pinjaman1)==0){
+				?>
 				<form method="post">
 					<div class="form-group">
 						<label>Masukkan uang yang akan dipinjamkan</label>
@@ -247,6 +251,12 @@ $text = $percent==100?"Berakhir":$text;
 						</div>
 					</div>
 				</form>
+				<?php }
+				else{
+					echo "Anda tidak bisa memberikan pinjaman jika masih ada pinjaman berlangsung";
+				}
+
+				 ?>
 			</div>
 			<?php } ?>
 

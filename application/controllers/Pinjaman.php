@@ -18,6 +18,12 @@ class Pinjaman extends CI_Controller {
 			setcookie('pesan_pinjaman',$error,time()+60,'/');
 			redirect('/home/pinjaman');
 		}
+		$pinjaman1 = $this->mpinjaman->ambilPinjaman(['id_member'=>$_SESSION['id_member'],'status_pengajuan'=>1,'status_pinjaman'=>0]);
+		if(count($pinjaman1)>0){
+			$error='Anda masih punya pinjaman berlangsung jadi tidak bisa mengajukan sampai pinjaman selesai';
+			setcookie('pesan_pinjaman',$error,time()+60,'/');
+			redirect('/home/pinjaman');
+		}
 		if($this->input->server('REQUEST_METHOD') == 'POST'){
 			$this->load->library('pdf');
 			$data = $this->input->post();
